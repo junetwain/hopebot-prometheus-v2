@@ -32,11 +32,11 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: |
             ${{ env.GHCR_SLUG }}
@@ -47,14 +47,14 @@ jobs:
             org.opencontainers.image.title=${{ env.TITLE }}
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       -
         name: Login to GitHub Container Registry
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -62,13 +62,13 @@ jobs:
       -
         name: Login to DockerHub
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push extra-audio
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           target: extra-audio
           platforms: |
@@ -93,7 +93,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Build and push core
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           target: core
           platforms: |
@@ -118,7 +118,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Build and push extra
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           target: extra
           platforms: |
@@ -139,7 +139,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Build and push core-audio
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           target: core-audio
           platforms: |
@@ -167,7 +167,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Build and push core-pylav
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           target: core-pylav
           platforms: |
@@ -191,7 +191,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       -
         name: Build and push extra-pylav
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           target: extra-pylav
           platforms: |
